@@ -88,8 +88,8 @@ architecture Behavioral of ALU_32bit is
      
      component mux_2to1
          port(
-         a : in std_logic;
-         b : in std_logic;
+         inA : in std_logic;
+         inB : in std_logic;
          sel : in std_logic;
          output : out std_logic
      );
@@ -122,8 +122,8 @@ begin
     not_carry <= not carry_out(31);
     
     MUX0:mux_2to1 port map (
-            a => carry_out(31),
-            b => not_carry,
+            inA => carry_out(31),
+            inB => not_carry,
             sel => ALU_C(1),
             output => c_out
         );

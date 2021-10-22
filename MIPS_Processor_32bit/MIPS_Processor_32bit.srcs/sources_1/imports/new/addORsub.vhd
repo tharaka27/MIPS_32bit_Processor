@@ -49,8 +49,8 @@ architecture Behavioral of addORsub is
     
     component mux_2to1
         port(
-        a : in std_logic;
-        b : in std_logic;
+        inA : in std_logic;
+        inB : in std_logic;
         sel : in std_logic;
         output : out std_logic
     );
@@ -71,8 +71,8 @@ begin
     not_b <= not B;
     
     MUX0:mux_2to1 port map (
-        a => B,
-        b => not_b,
+        inA => B,
+        inB => not_b,
         sel => sel,
         output => mux_result
     );

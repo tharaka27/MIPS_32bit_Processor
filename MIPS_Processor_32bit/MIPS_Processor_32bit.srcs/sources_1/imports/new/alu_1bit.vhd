@@ -62,8 +62,8 @@ architecture Behavioral of alu_1bit is
     
     component mux_2to1
         port(
-        a : in std_logic;
-        b : in std_logic;
+        inA : in std_logic;
+        inB : in std_logic;
         sel : in std_logic;
         output : out std_logic
     );
@@ -83,15 +83,15 @@ begin
     );
     
     MUX0:mux_2to1 port map (
-        a => AB_xor,
-        b => less,
+        inA => AB_xor,
+        inB => less,
         sel => ALU_control(1),
         output => xor_lessOut
     );
     
     MUX1:mux_2to1 port map (
-        a => addsub_out,
-        b => xor_lessOut,
+        inA => addsub_out,
+        inB => xor_lessOut,
         sel => ALU_control(0),
         output => result
     );
