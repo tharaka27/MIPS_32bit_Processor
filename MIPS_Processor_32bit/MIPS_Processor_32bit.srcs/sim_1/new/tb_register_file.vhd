@@ -54,19 +54,22 @@ UUT : register_file port map(
 stimu: process
 begin
     
-    writeRegister <= "00000";
+    writeRegister <= "00100";
     writeData     <= "10000000000000000000000000000000";
     regWrite      <= '1';
+    reset         <= '0';
     wait for 10ns;
+    
+    readRegister1 <= "00100";
+    regWrite      <= '0';
+    wait for 10ns;
+        
     
     writeRegister <= "00001";
     writeData     <= "10000000000000000000000000000001";
     regWrite      <= '1';
     wait for 10ns;
     
-    readRegister1 <= "00000";
-    regWrite      <= '0';
-    wait for 10ns;
     
     readRegister1 <= "00001";
     wait for 10ns;

@@ -9,7 +9,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity register_32bit is
   Port (
-    regOut  :   out std_logic_vector(31 downto 0);
+    regOut  :   inout std_logic_vector(31 downto 0);
     regData :   in  std_logic_vector(31 downto 0);
     writeEn :   in  std_logic;
     reset   :   in  std_logic;
@@ -21,7 +21,7 @@ architecture Behavioral of register_32bit is
     
     component reg_bit is
       Port ( 
-            bitOut  :   out std_logic;
+            bitOut  :   inout std_logic;
             bitData :   in  std_logic;
             writeEn :   in  std_logic;
             reset   :   in  std_logic;

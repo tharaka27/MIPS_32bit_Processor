@@ -15,7 +15,7 @@ architecture Behavioral of tb_register_32bit is
 
 component register_32bit is
   Port (
-    regOut  :   out std_logic_vector(31 downto 0);
+    regOut  :   inout std_logic_vector(31 downto 0);
     regData :   in  std_logic_vector(31 downto 0);
     writeEn :   in  std_logic;
     reset   :   in  std_logic;

@@ -48,7 +48,7 @@ architecture Behavioral of JR_control_unit_TB is
         port(
             AluOP : in std_logic_vector (1 downto 0);
             Func : in std_logic_vector (5 downto 0);
-            JR_control : out std_logic register := '0'
+            JR_control : out std_logic
         );
      end component;
 begin

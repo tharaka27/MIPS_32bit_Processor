@@ -35,7 +35,7 @@ entity ALU_control_Unit is
   Port ( 
     AluOP : in std_logic_vector (1 downto 0);
     Func : in std_logic_vector (5 downto 0);
-    ALU_c : out std_logic_vector (1 downto 0) register := "00"
+    ALU_c : out std_logic_vector (1 downto 0)
   );
 end ALU_control_Unit;
 

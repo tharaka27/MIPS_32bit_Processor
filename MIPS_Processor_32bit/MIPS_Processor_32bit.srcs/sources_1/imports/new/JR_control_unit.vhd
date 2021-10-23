@@ -35,7 +35,7 @@ entity JR_control_unit is
   Port (
     AluOP : in std_logic_vector (1 downto 0);
     Func : in std_logic_vector (5 downto 0);
-    JR_control : out std_logic register := '0'
+    JR_control : out std_logic
    );
    
 end JR_control_unit;

@@ -47,7 +47,7 @@ architecture Behavioral of ALU_control_Unit_TB is
         port(
             AluOP : in std_logic_vector (1 downto 0);
             Func : in std_logic_vector (5 downto 0);
-            ALU_c : out std_logic_vector (1 downto 0) register := "00"
+            ALU_c : out std_logic_vector (1 downto 0)
         );
      end component;
 

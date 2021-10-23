@@ -52,7 +52,7 @@ stim_proc: process
     wait for 10ns;
     
     writeEn <= '0';
-    bitData <= '1';
+    bitData <= '0';
     reset   <= '1';
     wait for 10ns;
     

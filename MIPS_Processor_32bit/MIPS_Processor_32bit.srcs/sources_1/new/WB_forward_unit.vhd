@@ -37,7 +37,7 @@ architecture Behavioral of WB_forward_unit is
                 Output  : out std_logic_vector (31 downto 0)
             );
          end component mux2x32to32;
-
+    -- 11111
 begin
     
     orOut1 <= writeRegister(4) or writeRegister(3) or writeRegister(2)

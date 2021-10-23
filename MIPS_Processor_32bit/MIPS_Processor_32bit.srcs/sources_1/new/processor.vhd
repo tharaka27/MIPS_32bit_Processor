@@ -7,18 +7,33 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity processor is
   Port (
         clk                     : in std_logic;
-        reset                   : in std_logic;
-        PC_output               : out std_logic_vector(31 downto 0);
-        opCode_output           : out std_logic_vector(5 downto 0);
-        Bus_A_ALU_output        : out std_logic_vector(31 downto 0);
-        Bus_B_ALU_output        : out std_logic_vector(31 downto 0)
+          reset                   : in std_logic;
+          PC_output               : out std_logic_vector(31 downto 0);
+          opCode_output           : out std_logic_vector(5 downto 0);
+          Bus_A_ALU_output        : out std_logic_vector(31 downto 0);
+          Bus_B_ALU_output        : out std_logic_vector(31 downto 0);
+          test31_1        : out std_logic_vector(31 downto 0);
+          test32_2        : out std_logic_vector(31 downto 0);
+          test5_1        : out std_logic_vector(4 downto 0);
+          test5_2        : out std_logic_vector(4 downto 0);
+          
+          test_1 : out std_logic;
+           test_2 : out std_logic;
+            test_3 : out std_logic; 
+            test_4 : out std_logic;
+             test_5 :out  std_logic;
+              test_6 :out std_logic;
+               test_7 : out std_logic;
+                test_8 : out std_logic
+            
+            
    );
 end processor;
 
 architecture Behavioral of processor is
         
-        signal PC           : std_logic_vector(31 downto 0) := "00000000000000000000000000000000";
-        signal PCin         : std_logic_vector(31 downto 0) := "00000000000000000000000000000000";
+        signal PC           : std_logic_vector(31 downto 0);
+        signal PCin         : std_logic_vector(31 downto 0);
         signal PC4          : std_logic_vector(31 downto 0);
         signal ID_PC4       : std_logic_vector(31 downto 0);
         signal EX_PC4       : std_logic_vector(31 downto 0);
@@ -158,7 +173,7 @@ architecture Behavioral of processor is
         -- PC register
         component register_32bit is
           Port (
-            regOut  :   out std_logic_vector(31 downto 0);
+            regOut  :   inout std_logic_vector(31 downto 0);
             regData :   in  std_logic_vector(31 downto 0);
             writeEn :   in  std_logic;
             reset   :   in  std_logic;
@@ -183,7 +198,7 @@ architecture Behavioral of processor is
         
         component reg_bit is
           Port ( 
-                bitOut  :   out std_logic;
+                bitOut  :   inout std_logic;
                 bitData :   in  std_logic;
                 writeEn :   in  std_logic;
                 reset   :   in  std_logic;
@@ -378,7 +393,7 @@ architecture Behavioral of processor is
           Port (
             AluOP : in std_logic_vector (1 downto 0);
             Func : in std_logic_vector (5 downto 0);
-            JR_control : out std_logic register := '0'
+            JR_control : out std_logic
            );
            
         end component JR_control_unit;
@@ -443,12 +458,12 @@ begin
      
      -- ID stage
      
-     opCode             <= instruction(31 downto 26);
-     functionPointer    <= instruction(5 downto 0);
-     rs                 <= instruction(25 downto 21);
-     rt                 <= instruction(20 downto 16);
-     rd                 <= instruction(15 downto 11);
-     imm16              <= instruction(15 downto 0);
+     opCode             <= ID_instruction(31 downto 26);
+     functionPointer    <= ID_instruction(5 downto 0);
+     rs                 <= ID_instruction(25 downto 21);
+     rt                 <= ID_instruction(20 downto 16);
+     rd                 <= ID_instruction(15 downto 11);
+     imm16              <= ID_instruction(15 downto 0);
 
      main_control : control_unit port map(
                 regDst          => regDst,
@@ -685,8 +700,6 @@ begin
         );
       
       -- mux 3 x32 to 32 to choose source of ALU (forwarding)
-      
-     
       mux3A : Forwarding_MUX port map ( 
             A => exReadData1,
             B => MEM_ALUResult,
@@ -973,9 +986,29 @@ begin
         Output => PCin
       ); 
    
-   PC_output               <= PCin;
+   PC_output               <= PC;
    opCode_output           <= opCode;
-   Bus_A_ALU_output        <= Bus_A_ALU;
-   Bus_B_ALU_output        <= Bus_B_ALU;
+   --Bus_A_ALU_output        <= Bus_A_ALU;
+   --Bus_B_ALU_output        <= Bus_B_ALU;
+   Bus_A_ALU_output <= exReadData1;
+   Bus_B_ALU_output <= readDataOut1;
+  
+               --C => WB_WriteData,
+  --test5_1 <= readDataOut1;
+  --test5_2 <= readDataOut2;
+  
+  
+                 test_1 <=   regDst          ;
+                 test_2 <=  ALUSrc          ;
+                 test_3 <=  memToReg        ;
+                 test_4 <=  regWrite         ;
+                 test_5 <=  memRead         ;
+                 test_6 <=  memWrite         ;
+                 test_7 <=  branch          ;
+--                  test_1 <= jump             ;
+--                  test_1 <= signZero         ;
+--                  test_1 <= ALUOp            ;
+--                  test_1 <= opCode           ;
+  
 
 end Behavioral;
