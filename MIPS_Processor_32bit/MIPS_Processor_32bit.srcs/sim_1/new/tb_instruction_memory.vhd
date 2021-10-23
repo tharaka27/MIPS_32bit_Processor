@@ -7,7 +7,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity tb_instruction_memory is
     generic(
-        addr_bits  : integer := 4;
+        addr_bits  : integer := 32;
         data_width : integer := 32
     );
 end tb_instruction_memory;
@@ -32,37 +32,37 @@ begin
        
 stim_proc: process
 begin
-    addr <= "0000";
+    addr <= "00000000000000000000000000000001";
     wait for 10ns;
-    addr <= "0001";
+    addr <= "00000000000000000000000000000010";
     wait for 10ns;
-    addr <= "0010";
+    addr <= "00000000000000000000000000000011";
     wait for 10ns;
-    addr <= "0011";
+    addr <= "00000000000000000000000000000100";
     wait for 10ns;
-    addr <= "0100";
+    addr <= "00000000000000000000000000000101";
     wait for 10ns;
-    addr <= "0101";
+    addr <= "00000000000000000000000000000110";
     wait for 10ns;
-    addr <= "0110";
+    addr <= "00000000000000000000000000001000";
     wait for 10ns;
-    addr <= "0111";
+    addr <= "00000000000000000000000000001001";
     wait for 10ns;
-    addr <= "1000";
+    addr <= "00000000000000000000000000001010";
     wait for 10ns;
-    addr <= "1001";
+    addr <= "00000000000000000000000000001011";
     wait for 10ns;
-    addr <= "1010";
+    addr <= "00000000000000000000000000001100";
     wait for 10ns;
-    addr <= "1011";
+    addr <= "00000000000000000000000000001101";
     wait for 10ns;
-    addr <= "1100";
+    addr <= "00000000000000000000000000001110";
     wait for 10ns;
-    addr <= "1101";
+    addr <= "00000000000000000000000000001111";
     wait for 10ns;
-    addr <= "1110";
+    addr <= "00000000000000000000000000010000";
     wait for 10ns;
-    addr <= "1111";
+    addr <= "00000000000000000000000000010001";
     wait;
 end process;
 

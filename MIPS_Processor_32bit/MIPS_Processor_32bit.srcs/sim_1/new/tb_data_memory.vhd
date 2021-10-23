@@ -18,11 +18,11 @@ end tb_data_memory;
 architecture Behavioral of tb_data_memory is
     component data_memory is
         Port ( 
-            addr        : in    std_logic_vector( addr_bits -1 downto 0 );
-            writeData   : in    std_logic_vector( data_width -1 downto 0 );
+            addr        : in    std_logic_vector( 31 downto 0 );
+            writeData   : in    std_logic_vector( 31 downto 0 );
             data        : out   std_logic_vector( data_width -1 downto 0 );
             writeEnable : in    std_logic;
-    --        memRead     : in    std_logic;
+            memRead     : in    std_logic;
             clk         : in    std_logic
         );
         
@@ -33,7 +33,7 @@ architecture Behavioral of tb_data_memory is
     signal  writeData   : std_logic_vector( data_width -1 downto 0 );
     signal  data        : std_logic_vector( data_width -1 downto 0 );
     signal  writeEnable : std_logic;
---  signal  memRead     : std_logic;
+    signal  memRead     : std_logic;
     signal  clk         : std_logic := '1';
 
 

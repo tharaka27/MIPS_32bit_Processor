@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 10/14/2021 07:33:19 PM
+-- Create Date: 10/23/2021 10:49:41 AM
 -- Design Name: 
--- Module Name: MUX_busB_ALU - Behavioral
+-- Module Name: mux_2x5to5 - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,32 +31,42 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity MUX_busB_ALU is
+entity mux_2x5to5 is
   Port ( 
-        A : in std_logic_vector (31 downto 0);
-        B : in std_logic_vector (31 downto 0);
-        Sel : in std_logic;
-        Output : out std_logic_vector (31 downto 0)
-      );
-end MUX_busB_ALU;
+    Addr_0 : in std_logic_vector (4 downto 0);
+    Addr_1 : in std_logic_vector (4 downto 0);
+    Sel : in std_logic;
+    Addr_out : out std_logic_vector (4 downto 0)
+  );
+end mux_2x5to5;
 
-architecture Behavioral of MUX_busB_ALU is
+architecture Behavioral of mux_2x5to5 is
+
     component mux_2to1
-    port(
-        inA : in std_logic;
-        inB : in std_logic;
+        port(
+        a : in std_logic;
+        b : in std_logic;
         sel : in std_logic;
         output : out std_logic
     );
-end component;
+    end component; 
+    
 begin
-    G_1: for i in 0 to 31 generate
-    MUXi:mux_2to1 port map (
-        inA => A(i),
-        inB => B(i),
+
+    G_1: for i in 0 to 4 generate
+    MUX_CELL:mux_2to1 port map (
+        a => Addr_0(i),
+        b => Addr_1(i),
         sel => Sel,
-        output => Output(i)
+        output => Addr_out(i)
     );
-end generate;
+    end generate;
+
+end Behavioral;
+
+architecture Behavioral of mux_2x5to5 is
+
+begin
+
 
 end Behavioral;

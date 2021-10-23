@@ -8,20 +8,14 @@ use ieee.numeric_std.all;
 
 entity instruction_memory is
   
-  generic(
-   addr_width : integer := 16;  
-   addr_bits  : integer := 4;
-   data_width : integer := 32
-  );
-  
-  Port ( addr : in std_logic_vector( addr_bits -1 downto 0 );
-         data : out std_logic_vector( data_width -1 downto 0 ) 
+  Port ( addr : in std_logic_vector( 31 downto 0 );
+         data : out std_logic_vector( 31 downto 0 ) 
   );
 end instruction_memory;
 
 architecture Behavioral of instruction_memory is
 
-   type rom_type is array(0 to addr_width -1) of std_logic_vector(data_width-1 downto 0);
+   type rom_type is array(0 to 15) of std_logic_vector(31 downto 0);
    
    signal instructionROM : rom_type := (
         "00111000000100000000000000000011", 

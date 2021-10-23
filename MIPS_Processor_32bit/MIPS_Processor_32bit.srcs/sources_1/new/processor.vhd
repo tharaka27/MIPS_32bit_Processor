@@ -6,149 +6,153 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity processor is
   Port (
-        clk         : in std_logic;
-        reset       : in std_logic
+        clk                     : in std_logic;
+        reset                   : in std_logic;
+        PC_output               : out std_logic_vector(31 downto 0);
+        opCode_output           : out std_logic_vector(5 downto 0);
+        Bus_A_ALU_output        : out std_logic_vector(31 downto 0);
+        Bus_B_ALU_output        : out std_logic_vector(31 downto 0)
    );
 end processor;
 
 architecture Behavioral of processor is
         
-        signal PC   : std_logic_vector(31 downto 0);
-        signal PCin   : std_logic_vector(31 downto 0);
-        signal PC4   : std_logic_vector(31 downto 0);
-        signal ID_PC4   : std_logic_vector(31 downto 0);
-        signal EX_PC4   : std_logic_vector(31 downto 0);
+        signal PC           : std_logic_vector(31 downto 0);
+        signal PCin         : std_logic_vector(31 downto 0);
+        signal PC4          : std_logic_vector(31 downto 0);
+        signal ID_PC4       : std_logic_vector(31 downto 0);
+        signal EX_PC4       : std_logic_vector(31 downto 0);
         
         -- pc signals in mux
-        signal PCbne   : std_logic_vector(31 downto 0);
-        signal PCj   : std_logic_vector(31 downto 0);
-        signal PC4bnej   : std_logic_vector(31 downto 0);
-        signal PCjr   : std_logic_vector(31 downto 0);
-        signal PC4bne   : std_logic_vector(31 downto 0);
+        signal PCbne        : std_logic_vector(31 downto 0);
+        signal PCj          : std_logic_vector(31 downto 0);
+        signal PC4bnej      : std_logic_vector(31 downto 0);
+        signal PCjr         : std_logic_vector(31 downto 0);
+        signal PC4bne       : std_logic_vector(31 downto 0);
         
         -- output of instruction memory
-        signal instruction   : std_logic_vector(31 downto 0);
+        signal instruction      : std_logic_vector(31 downto 0);
         signal ID_instruction   : std_logic_vector(31 downto 0);
         signal EX_instruction   : std_logic_vector(31 downto 0);
         
         -- Opcode, function
-        signal opCode   : std_logic_vector(5 downto 0);
-        signal functionPointer : std_logic_vector(5 downto 0);
+        signal opCode           : std_logic_vector(5 downto 0);
+        signal functionPointer  : std_logic_vector(5 downto 0);
         
         
         -- extend
-        signal imm16   : std_logic_vector(15 downto 0);
-        signal Im16_Ext   : std_logic_vector(31 downto 0);
-        signal EX_Im16_Ext   : std_logic_vector(31 downto 0);
-        signal sign_ext_out  : std_logic_vector(31 downto 0);
-        signal zero_ext_out   : std_logic_vector(31 downto 0);
+        signal imm16            : std_logic_vector(15 downto 0);
+        signal Im16_Ext         : std_logic_vector(31 downto 0);
+        signal EX_Im16_Ext      : std_logic_vector(31 downto 0);
+        signal sign_ext_out     : std_logic_vector(31 downto 0);
+        signal zero_ext_out     : std_logic_vector(31 downto 0);
         
         -- regfile
-        signal rs : std_logic_vector(4 downto 0);
-        signal rt   : std_logic_vector(4 downto 0);
-        signal rd   : std_logic_vector(4 downto 0);
-        signal Ex_rs   : std_logic_vector(4 downto 0);
-        signal Ex_rt   : std_logic_vector(4 downto 0);
-        signal Ex_rd   : std_logic_vector(4 downto 0);
-        signal Ex_writeRegister   : std_logic_vector(4 downto 0);
-        signal Mem_writeRegister  : std_logic_vector(4 downto 0);
-        signal WB_writeRegister   : std_logic_vector(31 downto 0);
+        signal rs                   : std_logic_vector(4 downto 0);
+        signal rt                   : std_logic_vector(4 downto 0);
+        signal rd                   : std_logic_vector(4 downto 0);
+        signal Ex_rs                : std_logic_vector(4 downto 0);
+        signal Ex_rt                : std_logic_vector(4 downto 0);
+        signal Ex_rd                : std_logic_vector(4 downto 0);
+        signal Ex_writeRegister     : std_logic_vector(4 downto 0);
+        signal Mem_writeRegister    : std_logic_vector(4 downto 0);
+        signal WB_writeRegister     : std_logic_vector(4 downto 0);
         
         
-        signal WB_writeData   : std_logic_vector(31 downto 0);
-        signal readData1   : std_logic_vector(31 downto 0);
-        signal readData2   : std_logic_vector(31 downto 0);
-        signal readDataOut1   : std_logic_vector(31 downto 0);
-        signal readDataOut2   : std_logic_vector(31 downto 0);
-        signal exReadData1   : std_logic_vector(31 downto 0);
-        signal exReadData2   : std_logic_vector(31 downto 0);
+        signal WB_writeData         : std_logic_vector(31 downto 0);
+        signal readData1            : std_logic_vector(31 downto 0);
+        signal readData2            : std_logic_vector(31 downto 0);
+        signal readDataOut1         : std_logic_vector(31 downto 0);
+        signal readDataOut2         : std_logic_vector(31 downto 0);
+        signal exReadData1          : std_logic_vector(31 downto 0);
+        signal exReadData2          : std_logic_vector(31 downto 0);
 
         -- ALU
-        signal Bus_A_ALU   : std_logic_vector(31 downto 0);
-        signal Bus_B_ALU   : std_logic_vector(31 downto 0);
-        signal Bus_B_forwarded   : std_logic_vector(31 downto 0);
-        signal Ex_ALUResult  : std_logic_vector(31 downto 0);
-        signal MEM_ALUResult   : std_logic_vector(31 downto 0);
-        signal WB_ALUResult   : std_logic_vector(31 downto 0);
-        signal zeroFlag   : std_logic;
-        signal overflowFlag   : std_logic;
-        signal carryFlag : std_logic;
-        signal negativeFlag   : std_logic;
-        signal notZeroFlag   : std_logic;
+        signal Bus_A_ALU            : std_logic_vector(31 downto 0);
+        signal Bus_B_ALU            : std_logic_vector(31 downto 0);
+        signal Bus_B_forwarded      : std_logic_vector(31 downto 0);
+        signal Ex_ALUResult         : std_logic_vector(31 downto 0);
+        signal MEM_ALUResult        : std_logic_vector(31 downto 0);
+        signal WB_ALUResult         : std_logic_vector(31 downto 0);
+        signal zeroFlag             : std_logic;
+        signal overflowFlag         : std_logic;
+        signal carryFlag            : std_logic;
+        signal negativeFlag         : std_logic;
+        signal notZeroFlag          : std_logic;
         
-        signal writeDataOfMem   : std_logic_vector(31 downto 0);
-        signal Mem_readDataOfMem   : std_logic_vector(31 downto 0);
-        signal WB_readDataOfMem   : std_logic_vector(31 downto 0);
+        signal writeDataOfMem       : std_logic_vector(31 downto 0);
+        signal Mem_readDataOfMem    : std_logic_vector(31 downto 0);
+        signal WB_readDataOfMem     : std_logic_vector(31 downto 0);
         
         -- Control signals
-        signal regDst   : std_logic;
-        signal ALUSrc   : std_logic;
-        signal MemToReg   : std_logic;
-        signal RegWrite   : std_logic;
-        signal memRead  : std_logic;
-        signal memWrite   : std_logic;
-        signal branch   : std_logic;
-        signal Jump : std_logic;
-        signal signZero :  std_logic;
-        signal JRControl : std_logic;
+        signal regDst       : std_logic;
+        signal ALUSrc       : std_logic;
+        signal MemToReg     : std_logic;
+        signal RegWrite     : std_logic;
+        signal memRead      : std_logic;
+        signal memWrite     : std_logic;
+        signal branch       : std_logic;
+        signal Jump         : std_logic;
+        signal signZero     :  std_logic;
+        signal JRControl    : std_logic;
         
         
         -- instruction decode phase
-        signal ID_RegDst : std_logic;
-        signal ID_ALUSrc : std_logic;
-        signal ID_MemtoReg : std_logic;
-        signal ID_RegWrite : std_logic;
-        signal ID_MemRead : std_logic;
-        signal ID_MemWrite : std_logic;
-        signal ID_Branch : std_logic;
+        signal ID_RegDst    : std_logic;
+        signal ID_ALUSrc    : std_logic;
+        signal ID_MemtoReg  : std_logic;
+        signal ID_RegWrite  : std_logic;
+        signal ID_MemRead   : std_logic;
+        signal ID_MemWrite  : std_logic;
+        signal ID_Branch    : std_logic;
         signal ID_JRControl : std_logic;
         
         -- Execution phase
-        signal Ex_RegDst : std_logic;
-        signal Ex_ALUSrc : std_logic;
-        signal Ex_MemtoReg : std_logic;
-        signal Ex_RegWrite : std_logic;
-        signal Ex_MemRead : std_logic;
-        signal Ex_MemWrite : std_logic;
-        signal Ex_Branch : std_logic;
+        signal Ex_RegDst    : std_logic;
+        signal Ex_ALUSrc    : std_logic;
+        signal Ex_MemtoReg  : std_logic;
+        signal Ex_RegWrite  : std_logic;
+        signal Ex_MemRead   : std_logic;
+        signal Ex_MemWrite  : std_logic;
+        signal Ex_Branch    : std_logic;
         signal Ex_JRControl : std_logic;
 
         -- Memory phase
         signal Mem_MemtoReg : std_logic;
         signal Mem_RegWrite : std_logic;
-        signal Mem_MemRead : std_logic;
+        signal Mem_MemRead  : std_logic;
         signal Mem_MemWrite : std_logic;
         
         -- Write back phase
         signal WB_MemtoReg : std_logic;
         signal WB_RegWrite : std_logic;
          
-        signal ALUOp   : std_logic_vector(1 downto 0);
-        signal ID_ALUOp   : std_logic_vector(1 downto 0);
-        signal Ex_ALUOp   : std_logic_vector(1 downto 0);
-        signal ALUControl   : std_logic_vector(1 downto 0);
-        signal bneControl : std_logic;
-        signal notbneControl : std_logic;
-        signal jumpControl : std_logic;
-        signal jumpFlush : std_logic;
+        signal ALUOp            : std_logic_vector(1 downto 0);
+        signal ID_ALUOp         : std_logic_vector(1 downto 0);
+        signal Ex_ALUOp         : std_logic_vector(1 downto 0);
+        signal ALUControl       : std_logic_vector(1 downto 0);
+        signal bneControl       : std_logic;
+        signal notbneControl    : std_logic;
+        signal jumpControl      : std_logic;
+        signal jumpFlush        : std_logic;
         
-        signal ForwardA   : std_logic_vector(1 downto 0);
-        signal ForwardB   : std_logic_vector(1 downto 0);
+        signal ForwardA         : std_logic_vector(1 downto 0);
+        signal ForwardB         : std_logic_vector(1 downto 0);
         
-        signal ID_Flush : std_logic;
-        signal IF_Flush : std_logic;
-        signal IFID_Flush : std_logic;
-        signal notIFID_Flush : std_logic;
-        signal stall_Flush : std_logic;
-        signal flush : std_logic;
+        signal ID_Flush         : std_logic;
+        signal IF_Flush         : std_logic;
+        signal IFID_Flush       : std_logic;
+        signal notIFID_Flush    : std_logic;
+        signal stall_Flush      : std_logic;
+        signal flush            : std_logic;
         
-        signal shiftLeft2_bne_out   : std_logic_vector(31 downto 0);
-        signal shiftLeft2_jump_out   : std_logic_vector(31 downto 0);
+        signal shiftLeft2_bne_out       : std_logic_vector(31 downto 0);
+        signal shiftLeft2_jump_out      : std_logic_vector(31 downto 0);
 
-        signal PC_WriteEn : std_logic;
+        signal PC_WriteEn   : std_logic;
         signal IFID_WriteEn : std_logic;
         
-        signal temp   : std_logic_vector(31 downto 0);
+        signal temp         : std_logic_vector(31 downto 0);
         
         
         -- PC register
@@ -172,7 +176,7 @@ architecture Behavioral of processor is
         end component adder_32bit;
         
         component instruction_memory is
-          Port ( addr : in std_logic_vector( 4 downto 0 );
+          Port ( addr : in std_logic_vector( 31 downto 0 );
                  data : out std_logic_vector( 31 downto 0 ) 
           );
         end component instruction_memory;
@@ -337,17 +341,10 @@ architecture Behavioral of processor is
         end component ALU_32bit;
         
         component data_memory is
-            generic(
-                addr_width     : integer := 1024;  
-                addr_bits      : integer := 10;
-                data_width     : integer := 32;
-                mem_data_width : integer := 8
-            );
-        
             Port ( 
-                addr        : in    std_logic_vector( addr_bits - 1 downto 0 );
-                writeData   : in    std_logic_vector( data_width -1 downto 0 );
-                data        : out   std_logic_vector( data_width -1 downto 0 );
+                addr        : in    std_logic_vector( 31 downto 0 );
+                writeData   : in    std_logic_vector( 31 downto 0 );
+                data        : out   std_logic_vector( 31 downto 0 );
                 writeEnable : in    std_logic;
         --        memRead     : in    std_logic;
                 clk         : in    std_logic
@@ -375,6 +372,25 @@ architecture Behavioral of processor is
             Output : out std_logic_vector (31 downto 0)
           );
         end component Shift_Left2;
+        
+        
+        component JR_control_unit is
+          Port (
+            AluOP : in std_logic_vector (1 downto 0);
+            Func : in std_logic_vector (5 downto 0);
+            JR_control : out std_logic register := '0'
+           );
+           
+        end component JR_control_unit;
+        
+        component mux_2x5to5 is
+          Port ( 
+            Addr_0 : in std_logic_vector (4 downto 0);
+            Addr_1 : in std_logic_vector (4 downto 0);
+            Sel : in std_logic;
+            Addr_out : out std_logic_vector (4 downto 0)
+          );
+        end component mux_2x5to5;
 
 begin
 
@@ -394,7 +410,6 @@ begin
     );
     
     
-    -- Wrong need to be changed
     ins_memory  : instruction_memory port map(
                 addr => PC,
                 data => instruction
@@ -428,12 +443,12 @@ begin
      
      -- ID stage
      
-     opCode <= instruction(31 downto 26);
-     functionPointer <= instruction(5 downto 0);
-     rs <= instruction(25 downto 21);
-     rt <= instruction(20 downto 16);
-     rd <= instruction(15 downto 11);
-     imm16 <= instruction(15 downto 0);
+     opCode             <= instruction(31 downto 26);
+     functionPointer    <= instruction(5 downto 0);
+     rs                 <= instruction(25 downto 21);
+     rt                 <= instruction(20 downto 16);
+     rd                 <= instruction(15 downto 11);
+     imm16              <= instruction(15 downto 0);
 
      main_control : control_unit port map(
                 regDst          => regDst,
@@ -494,6 +509,12 @@ begin
                Output => Im16_Ext
              );
     
+    
+    JR_cntrol:JR_control_unit port map (
+             AluOP => ALUop,
+             Func => functionpointer,
+             JR_control => JRControl
+         );
     
     discardInstructionBlock : Discard_Inst Port map (
              Jmp => Ex_JRControl,
@@ -664,19 +685,22 @@ begin
         );
       
       -- mux 3 x32 to 32 to choose source of ALU (forwarding)
+      
+     
       mux3A : Forwarding_MUX port map ( 
-            A => Bus_A_ALU,
-            B => exReadData1,
-            C => MEM_ALUResult,
-            Sel => WB_WriteData,
-            Data_Out => forwardA
+            A => exReadData1,
+            B => MEM_ALUResult,
+            C => WB_WriteData,
+            Sel => forwardA,
+            Data_Out => Bus_A_ALU
           );
+          
      mux3B : Forwarding_MUX port map ( 
-          A => Bus_B_ALU,
-          B => exReadData2,
-          C => MEM_ALUResult,
-          Sel => WB_WriteData,
-          Data_Out => forwardB
+          A => exReadData2,
+          B => MEM_ALUResult,
+          C => WB_WriteData,
+          Sel => forwardB,
+          Data_Out => Bus_B_ALU
         ); 
         
      -- mux 2x32 to 32 to select source Bus B of ALU
@@ -706,6 +730,12 @@ begin
     
     
     -- Mux2x5to5     
+    muxRegDst : mux_2x5to5 Port map( 
+        Addr_0      => EX_rt,
+        Addr_1      => EX_rd,
+        Sel         => EX_RegDst,
+        Addr_out    => EX_WriteRegister
+      );
     
     
     
@@ -792,8 +822,6 @@ begin
       );  
       
    -- Data memory
-   
-   -- module incorrect                       <------------------ correct here
    dataMem: data_memory
        port map(
                 addr => Mem_ALUResult ,
@@ -945,8 +973,9 @@ begin
         Output => PCin
       ); 
    
-   
-    
-    
+   PC_output               <= PC;
+   opCode_output           <= opCode;
+   Bus_A_ALU_output        <= Bus_A_ALU;
+   Bus_B_ALU_output        <= Bus_B_ALU;
 
 end Behavioral;

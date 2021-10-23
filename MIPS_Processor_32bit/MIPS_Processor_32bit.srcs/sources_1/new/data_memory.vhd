@@ -16,18 +16,18 @@ entity data_memory is
     );
 
     Port ( 
-        addr        : in    std_logic_vector( addr_bits - 1 downto 0 );
-        writeData   : in    std_logic_vector( data_width -1 downto 0 );
-        data        : out   std_logic_vector( data_width -1 downto 0 );
+        addr        : in    std_logic_vector( 31 downto 0 );
+        writeData   : in    std_logic_vector( 31 downto 0 );
+        data        : out   std_logic_vector( 31 downto 0 );
         writeEnable : in    std_logic;
---        memRead     : in    std_logic;
+        --memRead     : in    std_logic;
         clk         : in    std_logic
     );
     
 end data_memory;
 
 architecture Behavioral of data_memory is
-    type rom_type is array(0 to addr_width -1) of std_logic_vector(data_width-1 downto 0);
+    type rom_type is array(0 to addr_width -1) of std_logic_vector( 31 downto 0);
     signal dataMemory : rom_type;
     signal temp       : std_logic_vector(data_width -1 downto 0);
      
