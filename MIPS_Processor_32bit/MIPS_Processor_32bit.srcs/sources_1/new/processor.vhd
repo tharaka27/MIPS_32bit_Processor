@@ -13,9 +13,10 @@ entity processor is
           Bus_A_ALU_output        : out std_logic_vector(31 downto 0);
           Bus_B_ALU_output        : out std_logic_vector(31 downto 0);
           test31_1        : out std_logic_vector(31 downto 0);
-          test32_2        : out std_logic_vector(31 downto 0);
+          test31_2        : out std_logic_vector(31 downto 0);
           test5_1        : out std_logic_vector(4 downto 0);
           test5_2        : out std_logic_vector(4 downto 0);
+          test2_1        : out std_logic_vector(1 downto 0);
           
           test_1 : out std_logic;
            test_2 : out std_logic;
@@ -77,8 +78,8 @@ architecture Behavioral of processor is
         signal WB_writeData         : std_logic_vector(31 downto 0);
         signal readData1            : std_logic_vector(31 downto 0);
         signal readData2            : std_logic_vector(31 downto 0);
-        signal readDataOut1         : std_logic_vector(31 downto 0);
-        signal readDataOut2         : std_logic_vector(31 downto 0);
+        signal readData1Out         : std_logic_vector(31 downto 0);
+        signal readData2Out         : std_logic_vector(31 downto 0);
         signal exReadData1          : std_logic_vector(31 downto 0);
         signal exReadData2          : std_logic_vector(31 downto 0);
 
@@ -493,8 +494,8 @@ begin
       
      -- forwarding read data if write and read at the same time
      forward_unit : WB_forward_unit port map(
-               readData1Out => readDataOut1,
-               readData2Out => readDataOut1,
+               readData1Out => readData1Out,
+               readData2Out => readData2Out,
                readData1   => readData1,
                readData2   => readData2,
                writeData   => WB_writeData,
@@ -532,9 +533,9 @@ begin
          );
     
     discardInstructionBlock : Discard_Inst Port map (
-             Jmp => Ex_JRControl,
+             Jmp => JumpControl,
              BNE => bneControl,
-             JR => JumpControl,
+             JR => Ex_JRControl,
              Id_Flush => ID_Flush,
              If_Flush => IF_Flush
             );
@@ -576,7 +577,7 @@ begin
     
     IDEx_ReadData1 : register_32bit port map(
             regOut => exReadData1,
-            regData => readDataOut1,
+            regData => readData1Out,
             writeEn => '1',
             reset   => reset,
             clk     => clk
@@ -584,7 +585,7 @@ begin
         
     IDEx_ReadData2 : register_32bit port map(
             regOut => exReadData2,
-            regData => readDataOut2,
+            regData => readData2Out,
             writeEn => '1',
             reset   => reset,
             clk     => clk
@@ -713,15 +714,15 @@ begin
           B => MEM_ALUResult,
           C => WB_WriteData,
           Sel => forwardB,
-          Data_Out => Bus_B_ALU
+          Data_Out => Bus_B_forwarded
         ); 
         
      -- mux 2x32 to 32 to select source Bus B of ALU
      muxALUSrc   :  mux2x32to32 port map ( 
-        A => Bus_B_ALU,
-        B => Bus_B_Forwarded,
+        A => Bus_B_Forwarded,
+        B => EX_Im16_Ext,
         Sel =>  Ex_alusrc,
-        Output => Ex_im16_ext
+        Output => Bus_B_ALU
       );  
       
     ALUcontrolblock : ALU_control_Unit Port map ( 
@@ -912,10 +913,10 @@ begin
        );    
      
      muxMEMtoReg   :  mux2x32to32 port map ( 
-          A => WB_WriteData,
-          B => WB_ALUResult,
-          Sel =>  WB_memtoreg,
-          Output => WB_ReadDataOfMem
+          A => WB_ALUResult,
+          B => WB_ReadDataOfMem,
+          Sel =>  WB_MemtoReg,
+          Output => WB_WriteData
         );    
               
     Stall_cntrl: StallControl_Unit port map (
@@ -989,10 +990,21 @@ begin
    PC_output               <= PC;
    opCode_output           <= opCode;
    --Bus_A_ALU_output        <= Bus_A_ALU;
-   --Bus_B_ALU_output        <= Bus_B_ALU;
-   Bus_A_ALU_output <= exReadData1;
-   Bus_B_ALU_output <= readDataOut1;
-  
+   --Bus_B_ALU_output        <= Bus_B_ALU ;
+   --Bus_A_ALU_output <= readData1Out;
+   --Bus_B_ALU_output <= readData2Out;
+   test31_1                <= instruction; --
+   --test31_2                <= Mem_ALUResult;
+     --test2_1     <=        ALUControl;
+     Bus_A_ALU_output        <= exReadData1;
+     Bus_B_ALU_output        <= MEM_ALUResult ;
+     test31_2                <= WB_WriteData;
+     test2_1     <=        forwardA;
+                 --A => exReadData1,
+                 ---B => MEM_ALUResult,
+                -- C => WB_WriteData,
+                -- Sel => forwardA,
+                 --Data_Out => Bus_A_ALU
                --C => WB_WriteData,
   --test5_1 <= readDataOut1;
   --test5_2 <= readDataOut2;

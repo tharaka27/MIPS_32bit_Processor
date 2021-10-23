@@ -15,6 +15,6 @@ end zero_extension;
 architecture Behavioral of zero_extension is
 
 begin
-z_out <= "1111111111111111" & z_in;
+z_out <= "0000000000000000" & z_in;
 
 end Behavioral;

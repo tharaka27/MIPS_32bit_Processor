@@ -20,20 +20,20 @@ architecture Behavioral of tb_data_memory is
         Port ( 
             addr        : in    std_logic_vector( 31 downto 0 );
             writeData   : in    std_logic_vector( 31 downto 0 );
-            data        : out   std_logic_vector( data_width -1 downto 0 );
+            data        : out   std_logic_vector( 31 downto 0 );
             writeEnable : in    std_logic;
-            memRead     : in    std_logic;
+            --memRead     : in    std_logic;
             clk         : in    std_logic
         );
         
     end component data_memory;
     
      
-    signal  addr        : std_logic_vector( addr_bits -1 downto 0 );
-    signal  writeData   : std_logic_vector( data_width -1 downto 0 );
-    signal  data        : std_logic_vector( data_width -1 downto 0 );
+    signal addr        :     std_logic_vector( 31 downto 0 );
+    signal writeData   :     std_logic_vector( 31 downto 0 );
+    signal data        :    std_logic_vector( 31 downto 0 );
     signal  writeEnable : std_logic;
-    signal  memRead     : std_logic;
+    --signal  memRead     : std_logic;
     signal  clk         : std_logic := '1';
 
 
@@ -53,37 +53,43 @@ clk <= not clk after 5ns;
 stim_proc: process
     begin    
     -- Write some data
-    addr <= "0000000000";
+    addr <= "00000000000000000000000000000001";
     writeData <= "00000000000000000000000000000001";
     writeEnable <= '1';
     wait for 10ns;
     
     -- Read previously written data
-    addr <= "0000000000";
+    addr <= "00000000000000000000000000000001";
     writeEnable <= '0';
     wait for 10ns;
     
     -- Write some data
-    addr <= "0000000100";
+    addr <= "00000000000000000000000000000001";
     writeData <= "10000000000000000000000000000001";
     writeEnable <= '1';
     wait for 10ns;
+    
+    addr <= "11111111111111111111111111111111";
+    writeEnable <= '0';
+    wait for 10ns;
 
     -- Read previously written data
-    addr <= "0000000100";
+    addr <= "00000000000000000000000000000001";
     writeEnable <= '0';
     wait for 10ns;
     
     -- Write some data
-    addr <= "0000001100";
+    addr <= "00000000000000000000000000000001";
     writeData <= "11000000000000000000000000000001";
     writeEnable <= '1';
     wait for 10ns;
     
     -- Read previously written data
-    addr <= "0000001100";
+    addr <= "00000000000000000000000000000001";
     writeEnable <= '0';
     wait for 10ns;
+    
+    
    
     wait;
 end process;  

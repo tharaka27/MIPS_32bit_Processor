@@ -15,15 +15,18 @@ entity d_flipflop is
 end d_flipflop;
 
 architecture Behavioral of d_flipflop is
+        signal temp : std_logic;
 
 begin
     process(clk, Din, reset)
     begin
-        if(clk'event and clk='1') then
+        if(rising_edge(clk)) then
             if(reset = '1') then
                 Q <= '0';
+            else
+                Q <= Din;
             end if;
-            Q <= Din;
         end if;
+        --Q <= temp;
     end process;
 end Behavioral;
