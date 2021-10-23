@@ -31,7 +31,7 @@
     <Option Name="EnableBDX" Val="FALSE"/>
     <Option Name="DSABoardId" Val="basys3"/>
     <Option Name="DSANumComputeUnits" Val="16"/>
-    <Option Name="WTXSimLaunchSim" Val="217"/>
+    <Option Name="WTXSimLaunchSim" Val="224"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -62,15 +62,23 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/sources_1/imports/new/adder.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/adder.vhd"/>
+          <Attr Name="ImportTime" Val="1634894962"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/new/d_flipflop.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/new/adder.vhd">
+      <File Path="$PSRCDIR/sources_1/imports/new/addORsub.vhd">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/adder.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/addORsub.vhd"/>
           <Attr Name="ImportTime" Val="1634894962"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -94,9 +102,23 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/new/addORsub.vhd">
+      <File Path="$PSRCDIR/sources_1/imports/new/MUX_busB_ALU.vhd">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/addORsub.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/MUX_busB_ALU.vhd"/>
+          <Attr Name="ImportTime" Val="1634894962"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/mux2x32to32.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/new/alu_1bit.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/alu_1bit.vhd"/>
           <Attr Name="ImportTime" Val="1634894962"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -108,21 +130,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/new/MUX_busB_ALU.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/MUX_busB_ALU.vhd"/>
-          <Attr Name="ImportTime" Val="1634894962"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PSRCDIR/sources_1/new/mux32x32to32.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/new/mux2x32to32.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -130,14 +138,6 @@
       </File>
       <File Path="$PSRCDIR/sources_1/new/decorder.vhd">
         <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/imports/new/alu_1bit.vhd">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/alu_1bit.vhd"/>
-          <Attr Name="ImportTime" Val="1634894962"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -174,12 +174,6 @@
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sources_1/new/Shift_Left2.vhd"/>
           <Attr Name="ImportTime" Val="1634894962"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/new/register_file.vhd">
-        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -270,6 +264,12 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/sources_1/new/register_file.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/new/processor.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -286,6 +286,7 @@
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
         <Option Name="TopModule" Val="processor"/>
+        <Option Name="TopAutoSet" Val="TRUE"/>
       </Config>
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
@@ -302,21 +303,23 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sim_1/new/tb_data_memory.vhd">
+      <File Path="$PSRCDIR/sim_1/imports/new/ALU32bit_TB.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sim_1/new/ALU32bit_TB.vhd"/>
+          <Attr Name="ImportTime" Val="1634894962"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sim_1/new/tb_zero_extension.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sim_1/new/tb_register_32bit.vhd">
-        <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sim_1/new/tb_control_unit.vhd">
+      <File Path="$PSRCDIR/sim_1/new/tb_WB_forward_unit.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -337,32 +340,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sim_1/imports/new/ALU_control_Unit_TB.vhd">
-        <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sim_1/new/ALU_control_Unit_TB.vhd"/>
-          <Attr Name="ImportTime" Val="1634894962"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sim_1/imports/new/JR_control_unit_TB.vhd">
-        <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sim_1/new/JR_control_unit_TB.vhd"/>
-          <Attr Name="ImportTime" Val="1634894962"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sim_1/new/tb_zero_extension.vhd">
-        <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sim_1/new/tb_WB_forward_unit.vhd">
+      <File Path="$PSRCDIR/sim_1/new/tb_register_32bit.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -425,6 +403,20 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/sim_1/new/tb_data_memory.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sim_1/new/tb_control_unit.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sim_1/imports/new/Stall_control_unit_TB.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
@@ -461,6 +453,15 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/sim_1/imports/new/JR_control_unit_TB.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sim_1/new/JR_control_unit_TB.vhd"/>
+          <Attr Name="ImportTime" Val="1634894962"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sim_1/imports/new/Flush_unit_TB.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
@@ -470,10 +471,10 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sim_1/imports/new/ALU32bit_TB.vhd">
+      <File Path="$PSRCDIR/sim_1/imports/new/ALU_control_Unit_TB.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sim_1/new/ALU32bit_TB.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Mips-Processor-main/Mips-Processor-main/Mips-processor/Mips-processor.srcs/sim_1/new/ALU_control_Unit_TB.vhd"/>
           <Attr Name="ImportTime" Val="1634894962"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>

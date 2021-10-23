@@ -52,9 +52,9 @@ begin
             signZero    <= '0';
             ALUOp       <= "00";
       when "101011"  =>     -- sw - store word
-            regDst      <= '-';
+            regDst      <= '0';
             ALUSrc      <= '1';
-            memToReg    <= '-';
+            memToReg    <= '0';
             regWrite    <= '0';
             memRead     <= '0';
             memWrite    <= '1';
