@@ -44,8 +44,8 @@ architecture Behavioral of mux_2x5to5 is
 
     component mux_2to1
         port(
-        a : in std_logic;
-        b : in std_logic;
+        inA : in std_logic;
+        inB : in std_logic;
         sel : in std_logic;
         output : out std_logic
     );
@@ -55,18 +55,11 @@ begin
 
     G_1: for i in 0 to 4 generate
     MUX_CELL:mux_2to1 port map (
-        a => Addr_0(i),
-        b => Addr_1(i),
+        inA => Addr_0(i),
+        inB => Addr_1(i),
         sel => Sel,
         output => Addr_out(i)
     );
     end generate;
-
-end Behavioral;
-
-architecture Behavioral of mux_2x5to5 is
-
-begin
-
 
 end Behavioral;

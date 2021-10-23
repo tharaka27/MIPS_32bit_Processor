@@ -1,5 +1,5 @@
 --
--- Written by Tharaka Ratnayake
+-- Written by Tharaka Ratnayake & Vihan Melaka
 --
 
 library IEEE;
@@ -32,7 +32,16 @@ architecture Behavioral of tb_processor is
 
 begin
     clk <= not clk after 5ns;
-    reset <= '0';
+    
+    TB : process 
+        begin 
+        reset <= '0';
+        wait for 5ns;
+        reset <= '1';
+        wait for 5ns;
+        reset <= '0';
+        wait;
+    end process;
 
 UUT : processor port map(
     clk                => clk,
