@@ -96,8 +96,8 @@ decorder_1: decorder port map(
 R0 : register_32bit port map(
     regOut  =>  regArray(0),
     regData =>  "00000000000000000000000000000000",
-    writeEn =>  writeEnable(0),
-    reset   =>  reset,
+    writeEn =>  '1',
+    reset   =>  '0',
     clk     =>  clk
 );
     

@@ -17,8 +17,8 @@ end processor;
 
 architecture Behavioral of processor is
         
-        signal PC           : std_logic_vector(31 downto 0);
-        signal PCin         : std_logic_vector(31 downto 0);
+        signal PC           : std_logic_vector(31 downto 0) := "00000000000000000000000000000000";
+        signal PCin         : std_logic_vector(31 downto 0) := "00000000000000000000000000000000";
         signal PC4          : std_logic_vector(31 downto 0);
         signal ID_PC4       : std_logic_vector(31 downto 0);
         signal EX_PC4       : std_logic_vector(31 downto 0);
@@ -149,7 +149,7 @@ architecture Behavioral of processor is
         signal shiftLeft2_bne_out       : std_logic_vector(31 downto 0);
         signal shiftLeft2_jump_out      : std_logic_vector(31 downto 0);
 
-        signal PC_WriteEn   : std_logic;
+        signal PC_WriteEn   : std_logic := '1';
         signal IFID_WriteEn : std_logic;
         
         signal temp         : std_logic_vector(31 downto 0);
@@ -973,7 +973,7 @@ begin
         Output => PCin
       ); 
    
-   PC_output               <= PC;
+   PC_output               <= PCin;
    opCode_output           <= opCode;
    Bus_A_ALU_output        <= Bus_A_ALU;
    Bus_B_ALU_output        <= Bus_B_ALU;
