@@ -15,7 +15,7 @@ end instruction_memory;
 
 architecture Behavioral of instruction_memory is
 
-   type rom_type is array(0 to 15) of std_logic_vector(31 downto 0);
+   type rom_type is array(0 to 14) of std_logic_vector(31 downto 0);
    
    
    -- xori $s0, $zero, 0x0003
@@ -71,11 +71,26 @@ architecture Behavioral of instruction_memory is
         "10001110010100110000000000010000", -- 2387804176
         "00111010010100110000000000000001", -- 978518017
         "00111010101101010000000000000001", -- 984940545
-        "00000010101000000000000000001000", -- 44040200
-        "00000000000000000000000000000000" -- all zero padding instruction
+        "00000010101000000000000000001000" -- 44040200
+--        "00000000000000000000000000000000", -- all zero padding instruction
+--        "00000000000000000000000000000000",
+--        "00000000000000000000000000000000",
+--        "00000000000000000000000000000000"
    );
 
 begin
-    data <= instructionROM(to_integer(unsigned(addr)/4));
+
+    --data <= instructionROM(to_integer(unsigned(addr)/4));
+
+reading_process: process(addr) is
+variable tmp      : integer;
+begin
+      tmp := to_integer(unsigned(addr)/4);
+      if( (tmp >= 0) and (tmp < 15)) then
+               report "Requested address is " & integer'image(tmp);
+              data <= instructionROM(tmp);
+      end if;
+    
+end process;
 
 end Behavioral;

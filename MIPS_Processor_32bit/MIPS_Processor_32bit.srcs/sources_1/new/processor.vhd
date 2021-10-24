@@ -995,32 +995,32 @@ begin
       ); 
       
       -- Outputing internal commands
-        PC_output               <= PC;
-        opCode_output           <= opCode;
-        Bus_A_ALU_output        <= Bus_A_ALU;
-        Bus_B_ALU_output        <= Bus_B_ALU;
-        instruction_output      <= instruction; 
-        functionPointer_output  <= functionPointer;
-        rs_output               <= rs;
-        rt_output               <= rt;
-        rd_output               <= rd;
-        readData1_output        <= readData1;
-        readData2_output        <= readData2;
-        readData1Out_output     <= readData1Out;
-        readData2Out_output     <= readData2Out;   
-        regDst_output           <= regDst;
-        ALUSrc_output           <= ALUSrc;
-        MemToReg_output         <= MemToReg;
-        RegWrite_output         <= RegWrite;
-        memRead_output          <= memRead;
-        memWrite_output         <= memWrite;
-        branch_output           <= branch;
-        Jump_output             <= Jump;
-        signZero_output         <= signZero;
-        JRControl_output        <= JRControl;
-        ForwardA_output         <= ForwardA;
-        ForwardB_output         <= ForwardB; 
-        flush_output            <= flush;
+    PC_output               <= PC;
+    opCode_output           <= opCode;
+    Bus_A_ALU_output        <= Bus_A_ALU;
+    Bus_B_ALU_output        <= Bus_B_ALU;
+    instruction_output      <= instruction; 
+    functionPointer_output  <= functionPointer;
+    rs_output               <= rs;
+    rt_output               <= rt;
+    rd_output               <= rd;
+    readData1_output        <= readData1;
+    readData2_output        <= readData2;
+    readData1Out_output     <= readData1Out;
+    readData2Out_output     <= readData2Out;   
+    regDst_output           <= regDst;
+    ALUSrc_output           <= ALUSrc;
+    MemToReg_output         <= MemToReg;
+    RegWrite_output         <= RegWrite;
+    memRead_output          <= memRead;
+    memWrite_output         <= memWrite;
+    branch_output           <= branch;
+    Jump_output             <= Jump;
+    signZero_output         <= signZero;
+    JRControl_output        <= JRControl;
+    ForwardA_output         <= ForwardA;
+    ForwardB_output         <= ForwardB; 
+    flush_output            <= flush;
    
  
 end Behavioral;
